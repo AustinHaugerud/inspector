@@ -1,6 +1,7 @@
 package org.inspector.cpp;
 
 import org.inspector.ISourceInspector;
+import org.inspector.ResultAttributes;
 import org.inspector.SourceStructure;
 
 import java.io.InputStream;
@@ -8,9 +9,9 @@ import java.io.InputStream;
 public class CppInspector implements ISourceInspector {
 
     @Override
-    public SourceStructure inspectSource(InputStream input)
+    public ResultAttributes inspectSource(SourceStructure source1, SourceStructure source2)
     {
-        SourceStructure result = null;
+        ResultAttributes result = null;
         return result;
     }
 
