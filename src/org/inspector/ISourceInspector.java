@@ -1,9 +1,5 @@
 package org.inspector;
 
-import java.io.InputStream;
-
 public interface ISourceInspector {
-
-    SourceStructure inspectSource(InputStream input);
-
+    ResultAttributes inspectSource(SourceStructure source1, SourceStructure source2);
 }
