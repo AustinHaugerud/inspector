@@ -2,10 +2,11 @@ package org.inspector.bank;
 
 import org.inspector.items.ImmutableVariable;
 import org.inspector.items.MutableVariable;
+import org.inspector.items.VariableAccess;
 
 import java.util.*;
 
-public class VariableBank {
+public class VariableBank implements IVariableBankReadable {
 
     private ArrayList<MutableVariable> _variables;
 
@@ -54,7 +55,7 @@ public class VariableBank {
      * Get an immutable list of the variables in the bank
      * @return an immutable list of variables in the bank
      */
-    public List<ImmutableVariable> getVariables()
+    public List<ImmutableVariable> getImmutableVariables()
     {
         List<ImmutableVariable> immutables = new ArrayList<ImmutableVariable>(_variables.size());
 
@@ -82,5 +83,10 @@ public class VariableBank {
         {
             registerVariable(type, identifier, value);
         }
+    }
+
+    @Override
+    public List<VariableAccess> getVariables() {
+        return null;
     }
 }

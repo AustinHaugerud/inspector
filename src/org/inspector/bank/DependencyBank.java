@@ -1,7 +1,12 @@
 package org.inspector.bank;
 
-/**
- * Created by reaver on 3/3/17.
- */
-public class DependencyBank {
+import org.inspector.items.Dependency;
+
+import java.util.List;
+
+public class DependencyBank implements IDependencyBankReadable {
+    @Override
+    public List<Dependency> getDependencies() {
+        return null;
+    }
 }

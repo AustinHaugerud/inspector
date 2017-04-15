@@ -1,9 +1,6 @@
 package org.inspector;
 
-import org.inspector.bank.ClassBank;
-import org.inspector.bank.DependencyBank;
-import org.inspector.items.Procedure;
-import org.inspector.bank.VariableBank;
+import org.inspector.bank.*;
 
 public class SourceStructure {
 
@@ -23,7 +20,7 @@ public class SourceStructure {
      * languages like Java can't have functions outside
      * of an object
      */
-    private Procedure _procedureBank  = null;
+    private ProcedureBank _procedureBank  = null;
 
     /**
      * Global variables, again not necessarily valid
@@ -31,5 +28,25 @@ public class SourceStructure {
      * outside of a class definition
      */
     private VariableBank   _variableBank   = null;
+
+    public IClassBankReadable getClassBank()
+    {
+        return _classBank;
+    }
+
+    public IDependencyBankReadable getDependencyBank()
+    {
+        return _dependencyBank;
+    }
+
+    public IProcedureBankReadable getProcedures()
+    {
+        return _procedureBank;
+    }
+
+    public IVariableBankReadable getVariables()
+    {
+        return _variableBank;
+    }
 
 }
