@@ -4,13 +4,15 @@ import org.inspector.bank.VariableBank;
 
 public class Procedure {
 
+    public String _procedureName;
+
     /**
      * The parameters to the function/method
      */
-    private VariableBank _parameters = null;
+    public VariableBank _parameters = null;
 
     /**
      * The code block
      */
-    private Block        _block      = null;
+    public Block        _block      = null;
 }
