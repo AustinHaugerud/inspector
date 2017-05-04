@@ -9,34 +9,62 @@ import org.inspector.items.Class;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class JavaParser implements ISourceParser {
 
     private static final String STATEMENT_DELIMITER = ";";
 
-    private String extractPackageDeclaration(ArrayList<String> statements)
+    private String extractPackageDeclaration(String source)
     {
-        return null;
+        int packageStatementIndex = source.indexOf("package");
+        int packageStatementEndIndex = source.indexOf(";");
+
+        return source.substring(packageStatementIndex, packageStatementEndIndex);
     }
 
-    private DependencyBank extractImports(ArrayList<String> statements)
+    private DependencyBank extractImports(String source)
     {
-        return null;
+        DependencyBank result = new DependencyBank();
+
+        final String regexString =
+                Pattern.quote("import") + "(.*?)" + Pattern.quote(";");
+
+        Pattern pattern = Pattern.compile(regexString);
+
+        Matcher matcher = pattern.matcher(source);
+
+        while(matcher.find())
+        {
+            result.addDependency(matcher.group(1));
+        }
+
+        return result;
     }
 
-    private Class extractClassDefinition(ArrayList<String> statements)
+    private Class extractClassDefinition(String source)
     {
-        return null;
+        Class result = new Class();
+        int defintionStartIndex = source.indexOf("{");
+        int defintionEndIndex = source.lastIndexOf("}");
+        int classStartIndex = source.indexOf("class");
+
+        String culledDefinition = source.substring(defintionStartIndex - 1, defintionEndIndex);
+        String info = source.substring(classStartIndex, defintionStartIndex);
+
+        String infoParts[] = info.split(" ");
+        result._name = infoParts[1];
     }
 
     private SourceStructure parseBody(String body) {
         SourceStructure result = new SourceStructure();
 
-        ArrayList<String> statements = new ArrayList<>(Arrays.asList(body.split(STATEMENT_DELIMITER)));
+        String packageDeclaration = extractPackageDeclaration(body);
+        DependencyBank dependencyBank = extractImports(body);
+        Class classDefinition = extractClassDefinition(body);
 
-        String packageDeclaration = extractPackageDeclaration(statements);
-        DependencyBank dependencyBank = extractImports(statements);
-        Class classDefinition = extractClassDefinition(statements);
+        classDefinition.
 
         return result;
     }

@@ -38,11 +38,6 @@ public class Procedure {
         return _block;
     }
 
-    public int countUsages(ImmutableVariable var)
-    {
-        return 0;
-    }
-
     public String name()
     {
         return _name;

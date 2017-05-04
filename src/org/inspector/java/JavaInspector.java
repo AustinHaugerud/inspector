@@ -25,8 +25,6 @@ public class JavaInspector implements ISourceInspector
         Class class1 = source1.getClassBank().getClasses().get(0);
         Class class2 = source1.getClassBank().getClasses().get(0);
 
-        result.sharedOccurences = compareOccurences(class1, class2);
-
         result.numSharedDependencies = dependencyIntersectionWeight(source1, source2);
         result.numSharedClasses = compareClassMembers(source1, source2);
         result.numSharedLocalVariables = localVariableCollisions(source1, source2);
@@ -154,7 +152,8 @@ public class JavaInspector implements ISourceInspector
 
     private int countOccurences(Procedure procedure, ImmutableVariable var)
     {
-        return procedure.countUsages(var);
+        return 0;
+        //return procedure.countUsages(var);
     }
 
     private boolean procedureIsShared(Procedure procedure, IProcedureBankReadable procedureBank)
