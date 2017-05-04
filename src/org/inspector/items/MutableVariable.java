@@ -6,7 +6,7 @@ public class MutableVariable implements VariableAccess {
 
     private Variable _variable;
 
-    public MutableVariable(String type, String identifier, String value)
+    public MutableVariable()
     {
 
     }
