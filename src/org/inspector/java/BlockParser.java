@@ -10,25 +10,21 @@ public class BlockParser {
     public static Block parseBlock(String blockSource)
     {
         Block result = new Block();
-        List<String> statements = BlockParser.getStatements(blockSource);
+
+        String blocklessSource = blockSource.substring(1, blockSource.length() - 1);
+
+        List<String> statements = Arrays.asList(blocklessSource.split(";"));
 
         for(String statement : statements)
         {
-            String[] parts = statement.split(" ");
+            String parts[] = statement.split(" ",2);
+            String type = parts[0];
 
-            if(parts.length == 2)
-            {
-                String type = parts[0];
-                String name = parts[1];
-            }
-            else if(parts.length == 3)
-            {
+            String rest = parts[1];
 
-            }
-            else if(parts.length == 4)
-            {
+            String identifier = rest.replaceAll(" ","").replaceAll("=","").replaceAll(";","");
 
-            }
+            result.getVariableBank().setVariable(type, identifier, null);
         }
 
         return result;

@@ -26,7 +26,11 @@ public class VariableBank implements IVariableBankReadable {
      */
     private void registerVariable(String type, String identifier, String value)
     {
-        _variables.add(new MutableVariable(type, identifier, value));
+        MutableVariable var = new MutableVariable();
+        var.setType(type);
+        var.setIdentifier(identifier);
+        var.setValue(value);
+        _variables.add(var);
     }
 
     /**

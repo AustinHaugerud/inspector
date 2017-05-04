@@ -6,4 +6,8 @@ public class Block {
 
     private VariableBank _variables = null;
 
+    public VariableBank getVariableBank()
+    {
+        return _variables;
+    }
 }

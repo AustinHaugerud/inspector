@@ -32,4 +32,24 @@ public class Procedure {
         result._parameters = params;
         return result;
     }
+
+    public Block block()
+    {
+        return _block;
+    }
+
+    public int countUsages(ImmutableVariable var)
+    {
+        return 0;
+    }
+
+    public String name()
+    {
+        return _name;
+    }
+
+    public String returnType()
+    {
+        return _returnType;
+    }
 }
