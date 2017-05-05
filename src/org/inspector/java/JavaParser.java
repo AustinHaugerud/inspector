@@ -3,12 +3,14 @@ package org.inspector.java;
 import org.apache.commons.io.IOUtils;
 import org.inspector.ISourceParser;
 import org.inspector.SourceStructure;
+import org.inspector.bank.ClassBank;
 import org.inspector.bank.DependencyBank;
+import org.inspector.bank.ProcedureBank;
+import org.inspector.bank.VariableBank;
 import org.inspector.items.Class;
+import org.inspector.items.ImmutableVariable;
 
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,7 +39,8 @@ public class JavaParser implements ISourceParser {
 
         while(matcher.find())
         {
-            result.addDependency(matcher.group(1));
+            String match = matcher.group();
+            result.addDependency(match);
         }
 
         return result;
@@ -55,16 +58,66 @@ public class JavaParser implements ISourceParser {
 
         String infoParts[] = info.split(" ");
         result._name = infoParts[1];
+
+        result._procedureBank = extractMethods(culledDefinition);
+        result._variableBank = extractVariables(culledDefinition);
+
+        return result;
+    }
+
+    private ProcedureBank extractMethods(String source)
+    {
+
+        String methodRegex = "((public|private|protected|static|final|native|synchronized|abstract|transient)+\\s)+[\\$_\\w\\<\\>\\[\\]]*\\s+[\\$_\\w]+\\([^\\)]*\\)?\\s*\\{?[^\\}]*\\}?";
+
+        Pattern pattern = Pattern.compile(methodRegex);
+
+        Matcher matcher = pattern.matcher(source);
+
+        ProcedureBank procedures = new ProcedureBank();
+
+        while(matcher.find())
+        {
+            String methodSource = matcher.group();
+            procedures.addProcedure(MethodParser.parse(methodSource));
+        }
+
+        return procedures;
+    }
+
+    private VariableBank extractVariables(String source)
+    {
+
+        String varRegex = ".+\\s(.+?)(;|=)";
+
+        Pattern pattern = Pattern.compile(varRegex);
+
+        Matcher matcher = pattern.matcher(source);
+
+        VariableBank result = new VariableBank();
+
+        while(matcher.find())
+        {
+            String varSource = matcher.group(0);
+
+            ImmutableVariable var = VariableParser.parseVariable(varSource);
+
+            result.setVariable(var.type(), var.identifier(), var.value().orElseGet(null));
+        }
+
+        return result;
     }
 
     private SourceStructure parseBody(String body) {
-        SourceStructure result = new SourceStructure();
+        SourceStructure result;
 
         String packageDeclaration = extractPackageDeclaration(body);
         DependencyBank dependencyBank = extractImports(body);
         Class classDefinition = extractClassDefinition(body);
+        ClassBank classBank = new ClassBank();
+        classBank.addClass(classDefinition);
 
-        classDefinition.
+        result = new SourceStructure(classBank, dependencyBank, null, null);
 
         return result;
     }

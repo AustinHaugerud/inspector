@@ -84,16 +84,22 @@ public class MethodParser {
         String variablesSourceBlob = null;
         if(matcher.find())
         {
-            variablesSourceBlob = matcher.group(1);
+            variablesSourceBlob = matcher.group();
         }
         else
         {
             return null;
         }
 
+        result = new VariableBank();
+
+        if(variablesSourceBlob.replaceAll(" ","").length() == 2)
+        {
+            return result;
+        }
+
         String variablesSource[] = variablesSourceBlob.split(",");
 
-        result = new VariableBank();
         for(String varSrc : variablesSource)
         {
             ImmutableVariable var = VariableParser.parseVariable(varSrc);

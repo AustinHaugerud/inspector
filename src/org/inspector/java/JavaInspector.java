@@ -6,6 +6,7 @@ import org.inspector.SourceStructure;
 import org.inspector.bank.IClassBankReadable;
 import org.inspector.bank.IDependencyBankReadable;
 import org.inspector.bank.IProcedureBankReadable;
+import org.inspector.bank.ProcedureBank;
 import org.inspector.items.*;
 import org.inspector.items.Class;
 
@@ -37,7 +38,7 @@ public class JavaInspector implements ISourceInspector
     {
         for(Dependency otherDependency : dependBank.getDependencies())
         {
-            if(otherDependency.equals(dependency))
+            if(otherDependency._name.equals(dependency._name))
             {
                 return true;
             }
@@ -71,7 +72,7 @@ public class JavaInspector implements ISourceInspector
         return class1._name.equals(class2._name);
     }
 
-    int compareClassMembers(SourceStructure source1, SourceStructure source2)
+    private int compareClassMembers(SourceStructure source1, SourceStructure source2)
     {
         org.inspector.items.Class class1 = source1.getClassBank().getClasses().get(0);
         org.inspector.items.Class class2 = source2.getClassBank().getClasses().get(0);
@@ -96,7 +97,7 @@ public class JavaInspector implements ISourceInspector
         return numCollisions;
     }
 
-    int compareOccurences(org.inspector.items.Class class1, org.inspector.items.Class class2)
+    private int compareOccurences(org.inspector.items.Class class1, org.inspector.items.Class class2)
     {
         HashMap<String, Integer> occurencesClass1 = new HashMap<>();
         HashMap<String, Integer> occurencesClass2 = new HashMap<>();
@@ -160,7 +161,7 @@ public class JavaInspector implements ISourceInspector
     {
         for(Procedure otherProcedure : procedureBank.getProcedures())
         {
-            if(otherProcedure.equals(procedure))
+            if(otherProcedure.name().equals(procedure.name()))
             {
                 return true;
             }
@@ -170,8 +171,8 @@ public class JavaInspector implements ISourceInspector
 
     private int procedureNameCollisions(SourceStructure source1, SourceStructure source2)
     {
-        IProcedureBankReadable procedureBankOne = source1.getProcedures();
-        IProcedureBankReadable procedureBankTwo = source2.getProcedures();
+        IProcedureBankReadable procedureBankOne = source1.getClassBank().getClasses().get(0)._procedureBank;
+        IProcedureBankReadable procedureBankTwo = source2.getClassBank().getClasses().get(0)._procedureBank;
 
         int numShared = 0;
         for(Procedure procedure : procedureBankOne.getProcedures())
@@ -186,8 +187,11 @@ public class JavaInspector implements ISourceInspector
 
     private int localVariableCollisions(SourceStructure source1, SourceStructure source2)
     {
-        IProcedureBankReadable procedureBankOne = source1.getProcedures();
-        IProcedureBankReadable procedureBankTwo = source2.getProcedures();
+        Class classOne = source1.getClassBank().getClasses().get(0);
+        Class classTwo = source2.getClassBank().getClasses().get(0);
+
+        ProcedureBank procedureBankOne = classOne._procedureBank;
+        ProcedureBank procedureBankTwo = classTwo._procedureBank;
 
         HashMap<String, Integer> _varTable = new HashMap<>();
         int numCollisions = 0;

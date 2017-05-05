@@ -13,6 +13,11 @@ public class BlockParser {
 
         String blocklessSource = blockSource.substring(1, blockSource.length() - 1);
 
+        if(!blocklessSource.contains(";"))
+        {
+            return result;
+        }
+
         List<String> statements = Arrays.asList(blocklessSource.split(";"));
 
         for(String statement : statements)

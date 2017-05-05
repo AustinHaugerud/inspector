@@ -2,9 +2,14 @@ package org.inspector.items;
 
 class Variable {
 
-    String _type;
-    String _identifier;
-    String _value;
+    String _type = "";
+    String _identifier = "";
+    String _value = "";
+
+    Variable()
+    {
+
+    }
 
     Variable(String type, String identifier, String value)
     {

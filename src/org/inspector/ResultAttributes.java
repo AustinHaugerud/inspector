@@ -1,7 +1,6 @@
 package org.inspector;
 
 public class ResultAttributes {
-
     public int numSharedDependencies = 0;
     public int numSharedClasses = 0;
     public int numSharedLocalVariables = 0;

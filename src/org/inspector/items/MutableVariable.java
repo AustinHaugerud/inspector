@@ -4,7 +4,7 @@ import java.util.Optional;
 
 public class MutableVariable implements VariableAccess {
 
-    private Variable _variable;
+    private Variable _variable = new Variable();
 
     public MutableVariable()
     {

@@ -7,17 +7,17 @@ import java.util.List;
 
 public class DependencyBank implements IDependencyBankReadable {
 
-    private ArrayList<Dependency> _dependency;
+    private ArrayList<Dependency> _dependencies = new ArrayList<>();
 
     @Override
     public List<Dependency> getDependencies() {
-        return null;
+        return _dependencies;
     }
 
     public void addDependency(String source)
     {
         Dependency dependency = new Dependency();
         dependency._name = source.split(" ")[1];
-        _dependency.add(dependency);
+        _dependencies.add(dependency);
     }
 }

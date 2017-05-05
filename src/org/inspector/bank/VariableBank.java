@@ -91,6 +91,8 @@ public class VariableBank implements IVariableBankReadable {
 
     @Override
     public List<VariableAccess> getVariables() {
-        return null;
+        ArrayList<VariableAccess> result = new ArrayList<>();
+        result.addAll(_variables);
+        return result;
     }
 }
