@@ -22,7 +22,9 @@ public class MethodParser {
         String returnType = MethodParser.getReturnType(descriptors);
         VariableBank parameters = MethodParser.getParameters(methodSource);
 
-        return Procedure.buildProcedure(name, returnType, block, parameters);
+        Procedure result = Procedure.buildProcedure(name, returnType, block, parameters);
+        result._descriptors = descriptors;
+        return result;
     }
 
     private static List<String> getDescriptors(String methodSource)

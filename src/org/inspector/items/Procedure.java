@@ -2,6 +2,8 @@ package org.inspector.items;
 
 import org.inspector.bank.VariableBank;
 
+import java.util.List;
+
 public class Procedure {
 
     /**
@@ -17,6 +19,8 @@ public class Procedure {
     private String _name;
 
     private String _returnType;
+
+    public List<String> _descriptors;
 
     private Procedure()
     {
@@ -46,5 +50,16 @@ public class Procedure {
     public String returnType()
     {
         return _returnType;
+    }
+
+    public String getDescriptor()
+    {
+        StringBuilder sb = new StringBuilder();
+        for(String str : _descriptors)
+        {
+            sb.append(str);
+            sb.append(" ");
+        }
+        return sb.toString();
     }
 }

@@ -15,7 +15,13 @@ public class VariableParser {
         if(parts.length < 2)
             return null;
 
-        result.setType(parts[0]);
+        if(parts[0].contains("int")) {
+            result.setType("int");
+        }
+        else if(parts[0].contains("String"))
+        {
+            result.setType("String");
+        }
 
         String rhs[] = parts[1].replaceAll(" ","").split("=");
         if(rhs.length == 0)

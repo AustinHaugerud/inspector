@@ -23,7 +23,7 @@ public class JavaInspector implements ISourceInspector
         ResultAttributes result = new ResultAttributes();
 
         Class class1 = source1.getClassBank().getClasses().get(0);
-        Class class2 = source1.getClassBank().getClasses().get(1);
+        Class class2 = source2.getClassBank().getClasses().get(0);
 
         result.numSharedDependencies = dependencyIntersectionWeight(source1, source2);
         result.numSharedClasses = compareClassMembers(source1, source2);
