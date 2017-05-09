@@ -102,7 +102,9 @@ public class JavaParser implements ISourceParser {
 
             ImmutableVariable var = VariableParser.parseVariable(varSource);
 
-            result.setVariable(var.type(), var.identifier(), var.value().orElseGet(null));
+            if(var != null) {
+                result.setVariable(var.type(), var.identifier(), var.value().orElseGet(null));
+            }
         }
 
         return result;

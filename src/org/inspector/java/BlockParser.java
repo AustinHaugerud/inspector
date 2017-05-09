@@ -1,6 +1,7 @@
 package org.inspector.java;
 
 import org.inspector.items.Block;
+import org.inspector.items.ImmutableVariable;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,15 +23,15 @@ public class BlockParser {
 
         for(String statement : statements)
         {
-            String parts[] = statement.split(" ",2);
-            String type = parts[0];
-
-            String rest = parts[1];
-
-            String identifier = rest.replaceAll(" ","").replaceAll("=","").replaceAll(";","");
-
-            result.getVariableBank().setVariable(type, identifier, null);
+            if(statement.contains("int") || statement.contains("String"))
+            {
+                ImmutableVariable var = VariableParser.parseVariable(statement);
+                if(var != null)
+                    result.getVariableBank().setVariable(var.type(), var.identifier(), var.value().orElse(null));
+            }
         }
+
+        result.setSource(blockSource);
 
         return result;
     }

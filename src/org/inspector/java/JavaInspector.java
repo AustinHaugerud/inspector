@@ -10,6 +10,7 @@ import org.inspector.bank.ProcedureBank;
 import org.inspector.items.*;
 import org.inspector.items.Class;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class JavaInspector implements ISourceInspector
@@ -21,15 +22,17 @@ public class JavaInspector implements ISourceInspector
     {
         ResultAttributes result = new ResultAttributes();
 
-        boolean sameClassName = className(source1, source2);
-
         Class class1 = source1.getClassBank().getClasses().get(0);
-        Class class2 = source1.getClassBank().getClasses().get(0);
+        Class class2 = source1.getClassBank().getClasses().get(1);
 
         result.numSharedDependencies = dependencyIntersectionWeight(source1, source2);
         result.numSharedClasses = compareClassMembers(source1, source2);
         result.numSharedLocalVariables = localVariableCollisions(source1, source2);
         result.numSharedProcedures = procedureNameCollisions(source1, source2);
+        result.sharedOccurences = compareOccurences(class1, class2);
+        result.sourceInfo = new ArrayList<>();
+        result.sourceInfo.add(class1.getVariableUsageInfo());
+        result.sourceInfo.add(class2.getVariableUsageInfo());
 
         return result;
     }
